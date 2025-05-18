@@ -1,0 +1,28 @@
+name: homework1
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^0.13.6 # HTTP-запросы к API
+  url_launcher: ^6.1.12 # открытие ссылки на статью в браузере
+  shared_preferences: ^2.2.2 # хранение состояния
+  provider: ^6.1.1 # управление состоянием экрана
+
+dependency_overrides:
+  shared_preferences_web: ^2.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/placeholder.jpg
