@@ -13,6 +13,7 @@ class Article {
     required this.urlToImage,
   });
 
+  // Фабричный конструктор из JSON — преобразует Map в Article
   factory Article.fromJson(Map<String, dynamic> json) {
     return Article(
       title: json['title'] ?? '',

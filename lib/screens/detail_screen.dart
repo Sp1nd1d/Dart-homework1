@@ -3,16 +3,17 @@ import 'package:url_launcher/url_launcher.dart';
 import '../models/article.dart';
 
 class DetailScreen extends StatelessWidget {
-  final Article article;
+  final Article article; // Статья, переданная с главного экрана
 
   const DetailScreen({super.key, required this.article});
 
+  // Открывает ссылку на статью в браузере
   void _launchURL(BuildContext context) async {
     final uri = Uri.parse(article.url);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     } else {
-      if (!context.mounted) return;
+      if (!context.mounted) return; // Проверка, что context всё ещё активен
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Не удалось открыть ссылку')),
       );
@@ -21,9 +22,11 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Подготавливаем текст для отображения
     final String mainText =
         (() {
           if (article.content.isNotEmpty) {
+            // Очищаем хвост вида "[+123 chars]" (ограничения запроса на получение полного текста статьи)
             final cleaned = article.content.replaceAll(
               RegExp(r'\s*\[\+\d+\schars\]'),
               '',
@@ -48,12 +51,13 @@ class DetailScreen extends StatelessWidget {
                 height: 500,
                 width: double.infinity,
                 child: FadeInImage.assetNetwork(
-                  placeholder: 'assets/placeholder.jpg',
-                  image: article.urlToImage,
+                  placeholder:
+                      'assets/placeholder.jpg', // заглушка до загрузки основного изображения
+                  image: article.urlToImage, // загружаемое основное изображение
                   fit: BoxFit.cover,
                   imageErrorBuilder:
                       (context, error, stackTrace) => Image.asset(
-                        'assets/placeholder.jpg',
+                        'assets/placeholder.jpg', // если загрузка неудачна - показывается заглушка
                         fit: BoxFit.cover,
                       ),
                 ),
@@ -62,14 +66,15 @@ class DetailScreen extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 child: Text(
-                  mainText,
+                  mainText, // Основной текст статьи
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
             ),
             const SizedBox(height: 12),
             ElevatedButton(
-              onPressed: () => _launchURL(context),
+              onPressed:
+                  () => _launchURL(context), // Переход на статью в браузере
               child: const Text('Читать статью в браузере'),
             ),
           ],
